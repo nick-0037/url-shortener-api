@@ -3,10 +3,13 @@ require('dotenv').config();
 const express = require('express');
 const { nanoid } = require('nanoid');
 const { connectDB } = require('./mongo');
+const cors = require('cors');
 
 const URL = require('./models/Url');
 
 const app = express();
+
+app.use(cors());
 
 connectDB();
 
