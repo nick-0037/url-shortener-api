@@ -43,20 +43,13 @@ app.get('/shorten/:shortCode', async (req, res) => {
   
   try {
     const url = await URL.findOne({ shortCode });
-    
+
     if (!url) return res.status(404).json({ message: 'Short URL not found.' });
-
+    
     url.accessCount += 1;
-
     await url.save();
-
-    res.status(200).json({
-      id: url._id,
-      url: url.url,
-      shortCode: url.shortCode,
-      createdAt: url.createdAt,
-      updatedAt: url.updatedAt
-    });
+    
+    return res.redirect(url.url);
   } catch (err) {
     res.status(500).json({ message: 'Internal server error', error: err.message });
   }
